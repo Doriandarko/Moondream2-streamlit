@@ -7,21 +7,39 @@ from transformers import TextIteratorStreamer
 import re
 import time
 
-# Download the model
-model_path = snapshot_download("vikhyatk/moondream1")
+@st.cache_resource
+def load_model():
+    # Download the model
+    model_path = snapshot_download("vikhyatk/moondream1")
+    # Initialize the vision encoder and text model
+    vision_encoder = VisionEncoder(model_path)
+    text_model = TextModel(model_path)
+    return vision_encoder, text_model
 
-# Initialize the vision encoder and text model
-vision_encoder = VisionEncoder(model_path)
-text_model = TextModel(model_path)
+# Load the model
+vision_encoder, text_model = load_model()
+
+
 
 # Streamlit app title
 st.title("🌝 Moondream1 Vision Model")
 st.write("A small but powerful vision model that outperforms models twice its size.")
-st.markdown("Created by [@vikhyatk](https://twitter.com/vikhyatk)")
+st.markdown("Model created by [@vikhyatk](https://twitter.com/vikhyatk) app by [@skirano](https://twitter.com/skirano)")
+
+# Initialize session state for uploaded image and prompt
+if 'uploaded_image' not in st.session_state:
+    st.session_state['uploaded_image'] = None
+if 'prompt' not in st.session_state:
+    st.session_state['prompt'] = ""
+
 # File uploader for the image
 uploaded_image = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
+if uploaded_image is not None:
+    st.session_state['uploaded_image'] = uploaded_image
+
 # Text input for the prompt
-prompt = st.text_input("Question")
+prompt = st.text_input("Question", value=st.session_state['prompt'])
+st.session_state['prompt'] = prompt
 
 # Function to generate text from the image and prompt
 def generate_text(image_embeds, prompt):
@@ -59,12 +77,12 @@ def generate_text(image_embeds, prompt):
 
 # Button to trigger text generation
 if st.button("Generate"):
-    if uploaded_image is not None and prompt:
+    if st.session_state['uploaded_image'] is not None and st.session_state['prompt']:
         # Open the uploaded image
-        image = Image.open(uploaded_image)
+        image = Image.open(st.session_state['uploaded_image'])
         # Get image embeddings
         image_embeds = vision_encoder(image)
         # Call the generate_text function
-        generate_text(image_embeds, prompt)
+        generate_text(image_embeds, st.session_state['prompt'])
     else:
         st.warning("Please upload an image and enter a prompt.")
