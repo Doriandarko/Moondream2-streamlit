@@ -24,7 +24,7 @@ vision_encoder, text_model = load_model()
 # Streamlit app title
 st.title("🌝 Moondream1 Vision Model")
 st.write("A small but powerful vision model that outperforms models twice its size.")
-st.markdown("Model created by [@vikhyatk](https://twitter.com/vikhyatk) app by [@skirano](https://twitter.com/skirano)")
+st.markdown("Model created by [@vikhyatk](https://twitter.com/vikhyatk). App by [@skirano](https://twitter.com/skirano)")
 
 # Initialize session state for uploaded image and prompt
 if 'uploaded_image' not in st.session_state:
