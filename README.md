@@ -12,16 +12,16 @@ This is a Streamlit app that uses the Moondream1 Vision Model to generate text b
 
 1. Install the required Python packages:
 
-\ bash
-pip install streamlit moondream PIL huggingface_hub transformers
-\
+```bash
+pip install -r requirements.txt
+```
 
 
 2. Run the Streamlit app:
 
-\ bash
+```bash
 streamlit run vision.py
-\
+```
 
 3. Open the app in your web browser at `http://localhost:8501`.
 
