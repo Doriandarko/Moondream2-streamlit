@@ -36,6 +36,9 @@ if 'prompt' not in st.session_state:
 uploaded_image = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
 if uploaded_image is not None:
     st.session_state['uploaded_image'] = uploaded_image
+    # Display the uploaded image
+    image = Image.open(st.session_state['uploaded_image'])
+    st.image(image, caption='Uploaded Image.', use_column_width=True)
 
 # Text input for the prompt
 prompt = st.text_input("Question", value=st.session_state['prompt'])
