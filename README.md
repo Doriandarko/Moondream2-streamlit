@@ -1,6 +1,6 @@
-# Moondream1 Vision Model Streamlit App
+# Moondream2 Vision Model Streamlit App
 
-This is a Streamlit app that uses the Moondream1 Vision Model to generate text based on an uploaded image and a user-provided prompt.
+This is a Streamlit app that uses the Moondream2 Vision Model to generate text based on an uploaded image and a user-provided prompt.
 
 ## Features
 
